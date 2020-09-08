@@ -29,8 +29,7 @@ export default function App() {
   }, []);
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see something happen!</h2>
+      <h1>Random Name List</h1>
       <List items={names?.data} loading={names?.isLoading} />
       <button ref={buttonEl}  >More</button>
     </div>
