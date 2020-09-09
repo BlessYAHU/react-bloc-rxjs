@@ -15,8 +15,10 @@ const List = ({ items = [], loading = false }) => (
   </ul>
 );
 
+  let viewList: never[] = [];
 export default function App() {
   const names: any = useObservable(randomNameRetriever.Subject$);
+  viewList = viewList.concat(names?.data);
   const buttonEl = React.useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export default function App() {
   return (
     <div className="App">
       <h1>Random Name List</h1>
-      <List items={names?.data} loading={names?.isLoading} />
+      <List items={viewList} loading={names?.isLoading} />
       <button ref={buttonEl}  >More</button>
     </div>
     
