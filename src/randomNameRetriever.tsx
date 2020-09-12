@@ -8,7 +8,7 @@ const api =(count: any)=> `https://randomuser.me/api/?results=5&seed=rx${count}-
 const getName = (user: any) => `${user.name.first} ${user.name.last}`;
 let count = 0;
 const create = ()=> {
-  const behaviorSubj$ = new BehaviorSubject('More'); 
+const behaviorSubj$ = new BehaviorSubject('More'); 
 const subj = behaviorSubj$.pipe(switchMap(
   (x: string)=> { 
     console.log('hey -' + x +'-'); 

@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 
-const useObservable = (observable: any) => {
+const useObservable = (observable: any, action : any = ()=>{}) => {
   const [state, setState] = useState();
 
   useEffect(() => {
-    const sub = observable.subscribe(setState);
+    const sub = observable.subscribe((x: any)=>{
+      action(x);
+      setState(x);
+    });
     return () => sub.unsubscribe();
   }, [observable]);
 
