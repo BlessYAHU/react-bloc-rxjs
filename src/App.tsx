@@ -2,30 +2,16 @@ import React, {useEffect} from "react";
 import "./styles.css";
 import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import useObservable from './useObservable';
-import randomNameRetriever from './randomNameRetriever';
-import NameData from './NameData';
-import AddName from './AddName';
 import { FromEventTarget } from "rxjs/internal/observable/fromEvent";
+import useObservable from './useObservable';
 
-const List = ({ items = [], loading = false }) => (
-  <ul className={loading ? 'loading' : undefined}>
-    {items.map(item => (
-      <li key={item}>{item}</li>
-    ))}
-  </ul>
-);
+import List from './List';
+import AddName from './AddName';
+import AppBloc from './AppBloc';
 
-  let viewList: never[] = [];
 export default function App() {
-  const appendList = (x: any)=> viewList = viewList.concat(x.data);
-  const names: any = useObservable(randomNameRetriever.Subject$, appendList);
-  const append = (x: any)=>{
-    console.log(x);
-     viewList = viewList.concat(x);
-  };
-  const newName: any = useObservable(NameData.AddedName$, append);
+  const viewList = useObservable(AppBloc.ListStream$);
+  const isLoading = useObservable(AppBloc.IsLoadingStream$);
   const buttonEl = React.useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -33,16 +19,16 @@ export default function App() {
       map((event: any)=> { 
         console.log('in map'); return [event.target.innerHTML]}))
         .subscribe((e)=>{
-          randomNameRetriever.GetNames();
+          AppBloc.GetMoreNames();
         });
 
-    return () => clicky.unsubscribe();
+    return clicky.unsubscribe;
   }, []);
   return (
     <div className="App">
       <h1>Random Name List</h1>
       <AddName ></AddName>
-      <List items={viewList} loading={names?.isLoading} />
+      <List items={viewList} loading={isLoading} />
       <button ref={buttonEl}  >More</button>
     </div>
     

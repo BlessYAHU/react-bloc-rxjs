@@ -15,7 +15,7 @@ const subj = behaviorSubj$;
 //     return empty();
 //   }));
 
-const NameData = {
+const AddNameBloc = {
     // todo: rename to descriptive steam?
     AddedName$ : subj.pipe(filter((x: any) => x.Command === 'Add'), map((x: any)=> x.Value)),
     Add : (newName: string) => {
@@ -24,4 +24,4 @@ const NameData = {
     
 };
 
-export default NameData;
+export default AddNameBloc;
